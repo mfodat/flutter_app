@@ -88,7 +88,7 @@ class _TelemedicineConsultationState extends State<TelemedicineConsultation> {
       final productsData = Provider.of<Policies>(context);
       final teleMedicine =  Provider.of<TeleMedicine>(context);
       final String   phone = teleMedicine.phone;
-      final medicalPolicyList =  productsData.medicalPolicyDetailsResponse.medicalPolicyList;
+      final medicalPolicyList =  productsData?.medicalPolicyDetailsResponse?.medicalPolicyList;
     _gender = _medicalPolicy == null ? '' : _medicalPolicy.gender;
 
     print(_gender);
@@ -222,7 +222,9 @@ class _TelemedicineConsultationState extends State<TelemedicineConsultation> {
   }
 
   String makeTextfit(String memberName) {
-
-    return "tesssstt";
+    if(memberName.length > 20 )
+      return memberName.substring(0,20)+'..';
+    else
+      return memberName;
   }
 }

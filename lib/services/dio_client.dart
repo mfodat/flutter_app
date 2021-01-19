@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-const _defaultConnectTimeout = Duration.millisecondsPerMinute;
-const _defaultReceiveTimeout = Duration.millisecondsPerMinute;
+const _defaultConnectTimeout = 10000;//Duration.millisecondsPerMinute;
+const _defaultReceiveTimeout = 10000;//Duration.millisecondsPerMinute;
 
 class DioClient {
   final String baseUrl;
@@ -17,6 +17,8 @@ class DioClient {
 
   DioClient(
     this.baseUrl, Dio dio, { this.interceptors, this.headers,}) {
+    print('_defaultConnectTimeout '+_defaultConnectTimeout.toString());
+    print('_defaultReceiveTimeout '+_defaultReceiveTimeout.toString());
     _dio = dio ?? Dio();
     _dio
       ..options.baseUrl = baseUrl

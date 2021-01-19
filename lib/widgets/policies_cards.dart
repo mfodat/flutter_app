@@ -7,9 +7,6 @@ import '../providers/policies.dart';
 
 
 class PoliciesCards extends StatelessWidget {
-  //final bool showFavs;
-
-  //PoliciesCards();
 
   @override
   Widget build(BuildContext context) {
