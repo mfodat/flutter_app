@@ -109,7 +109,7 @@ class _TelemedicineConsultationState extends State<TelemedicineConsultation> {
                   items: medicalPolicyList
                       .map((medicalPolicy) =>
                       DropdownMenuItem(
-                        child: Text(medicalPolicy.memberName),
+                        child: Text(makeTextfit(medicalPolicy.memberName)),
                         value: medicalPolicy,
                       ))
                       .toList(),
@@ -219,5 +219,10 @@ class _TelemedicineConsultationState extends State<TelemedicineConsultation> {
         ),
       ),
     );
+  }
+
+  String makeTextfit(String memberName) {
+
+    return "tesssstt";
   }
 }

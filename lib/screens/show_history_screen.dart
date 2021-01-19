@@ -77,50 +77,47 @@ class _ShowHistoryScreenState extends State<ShowHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TaskData(),
-      child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () => displayModalBottomSheet(context),
-                  child: Icon(
-                    Icons.filter_alt_outlined,
-                    size: 26.0,
-                  ),
-                )),
-          ],
-          //backgroundColor: Colors.lightBlueAccent[100],
-        ),
-        backgroundColor: Colors.grey,
-        floatingActionButton: FloatingActionButton(
-          //  backgroundColor: Colors.lightBlueAccent,
-            child: Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                new MaterialPageRoute(builder: (context) {
-                  return TelemedicineConsultation();
-                }),
-              );
-            }),
-        body: _isLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Header(),
-                  Expanded(
-                    child: TasksList(),
-                  ),
-                ],
-              ),
-        bottomNavigationBar: MedicalPolicesBottomNavigationBar(),
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () => displayModalBottomSheet(context),
+                child: Icon(
+                  Icons.filter_alt_outlined,
+                  size: 26.0,
+                ),
+              )),
+        ],
+        //backgroundColor: Colors.lightBlueAccent[100],
       ),
+      backgroundColor: Colors.grey,
+      floatingActionButton: FloatingActionButton(
+        //  backgroundColor: Colors.lightBlueAccent,
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+              context,
+              new MaterialPageRoute(builder: (context) {
+                return TelemedicineConsultation();
+              }),
+            );
+          }),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Header(),
+                Expanded(
+                  child: TasksList(),
+                ),
+              ],
+            ),
+      bottomNavigationBar: MedicalPolicesBottomNavigationBar(),
     );
   }
 

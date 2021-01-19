@@ -1,18 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import '../models/member_history_response.dart';
 import '../providers/tele_medicine.dart';
-import '../util/exception_handler.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/auth.dart';
-import '../models/http_exception.dart';
-
-class Screen3 extends StatelessWidget {
+class ConsultationDetailsScreen extends StatelessWidget {
   //static const routeName = '/teleMedicine-prev-history';
   final int index ;
-  Screen3(this.index);
+  ConsultationDetailsScreen(this.index);
   @override
   Widget build(BuildContext context) {
     //final index = ModalRoute.of(context).settings.arguments as int;

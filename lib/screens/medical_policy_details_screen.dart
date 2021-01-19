@@ -56,7 +56,7 @@ class _ProductsOverviewScreenState extends State<MedicalPolicyDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('MyShop'),
+          title: Text('My App'),
           actions: <Widget>[
             PopupMenuButton(
               onSelected: (FilterOptions selectedValue) {

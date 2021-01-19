@@ -21,24 +21,25 @@ class MyApp extends StatelessWidget {
           value: Auth(),
         ),
         ChangeNotifierProxyProvider<Auth, Policies>(
-          update: (ctx, auth, previousProducts) => Policies( auth,
+          update: (ctx, auth, previousPolicies) => Policies( auth,
           ),
         ),
         ChangeNotifierProxyProvider< Policies,TeleMedicine>(
-          update: (ctx, products, _ ) => TeleMedicine(
-              langId: products.medicalPolicyDetailsRequest.langCode,
-              policyNumber:  products.medicalPolicyDetailsRequest.policyNumber,
-              memberCode: products.medicalPolicyDetailsResponse.medicalPolicyList.first.memberCode,
-              phone: products.auth.customerLoginResponse.customer.mobile
+          update: (ctx, policies, _ ) => TeleMedicine(
+              langId: policies.medicalPolicyDetailsRequest.langCode,
+              policyNumber:  policies.medicalPolicyDetailsRequest.policyNumber,
+              memberCode: policies.medicalPolicyDetailsResponse.medicalPolicyList.first.memberCode,
+              phone: policies.auth.customerLoginResponse.customer.mobile
           ),
         ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Tawuniya',
           theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
+            primarySwatch: Colors.blueGrey,
+            accentColor: Colors.blueAccent,
             fontFamily: 'Lato',
           ),
           home: auth.isAuth ?  PoliciesScreen() :AuthScreen() , //Screen2(),//

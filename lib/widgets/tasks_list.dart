@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../providers/tele_medicine.dart';
 import '../widgets/task_tile.dart';
 import 'package:provider/provider.dart';
-import '../models/task_data.dart';
 
 class TasksList extends StatelessWidget {
   @override

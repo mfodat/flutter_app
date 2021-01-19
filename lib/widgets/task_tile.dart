@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../providers/tele_medicine.dart';
-import '../screens/screen3.dart';
+import '../screens/consultation_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class TaskTile extends StatelessWidget {
@@ -19,7 +19,7 @@ class TaskTile extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Screen3(index),
+              builder: (context) => ConsultationDetailsScreen(index),
             ),
           );
         },
