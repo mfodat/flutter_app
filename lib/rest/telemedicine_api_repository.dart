@@ -3,11 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import '../models/telemedicine_request.dart';
 import '../models/member_history_response.dart';
-import '../models/movie_response.dart';
-
-import '../services/api_result.dart';
-import '../services/dio_client.dart';
-import '../services/network_exceptions.dart';
 import '../services/dio_client.dart';
 
 class TelephoneMedicineAPIRepository {

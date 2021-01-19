@@ -1,6 +1,4 @@
 import 'package:flutter/foundation.dart';
-import '../../services/network_exceptions.dart';
-import '../../services/api_result.dart';
 import 'package:xml/xml.dart';
 import '../soap_client.dart';
 

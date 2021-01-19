@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import '../models/member_history_response.dart';
 import '../models/telemedicine_request.dart';
 import '../rest/telemedicine_api_repository.dart';
-import '../services/api_result.dart';
 import '../soap/model/customer_login_client.dart';
 
 import '../models/http_exception.dart';

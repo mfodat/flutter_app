@@ -6,9 +6,7 @@ import '../widgets/bottom_navigation_bar.dart';
 import '../widgets/filter_modal_bottom_sheet.dart';
 import '../widgets/tasks_list.dart';
 import '../widgets/header.dart';
-
 import 'package:provider/provider.dart';
-import '../models/task_data.dart';
 
 
 class ShowHistoryScreen extends StatefulWidget {
