@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/bottom_navigation_bar.dart';
 import '../widgets/filter_modal_bottom_sheet.dart';
 import '../widgets/medical_policy_details_cards.dart';
-import '../providers/products.dart';
+import '../providers/policies.dart';
 import '../widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +42,7 @@ class _ProductsOverviewScreenState extends State<MedicalPolicyDetailsScreen> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<Products>(context).fetchAndSetMedicalPolicyDetails(policyNumber).then((_) {
+      Provider.of<Policies>(context).fetchAndSetMedicalPolicyDetails(policyNumber).then((_) {
         setState(() {
           _isLoading = false;
         });

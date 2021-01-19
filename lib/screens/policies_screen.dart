@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/policies_cards.dart';
-import '../providers/products.dart';
+import '../providers/policies.dart';
 import '../widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +37,7 @@ class _ProductsOverviewScreenState extends State<PoliciesScreen> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<Products>(context).fetchAndSetPolicies().then((_) {
+      Provider.of<Policies>(context).fetchAndSetPolicies().then((_) {
         setState(() {
           _isLoading = false;
         });

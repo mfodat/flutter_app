@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import '../providers/products.dart';
+import '../providers/policies.dart';
 import '../providers/tele_medicine.dart';
 import '../soap/model/medical_policy_details_client.dart';
 import '../util/exception_handler.dart';
@@ -85,7 +85,7 @@ class _TelemedicineConsultationState extends State<TelemedicineConsultation> {
   }
   @override
   Widget build(BuildContext context) {
-      final productsData = Provider.of<Products>(context);
+      final productsData = Provider.of<Policies>(context);
       final teleMedicine =  Provider.of<TeleMedicine>(context);
       final String   phone = teleMedicine.phone;
       final medicalPolicyList =  productsData.medicalPolicyDetailsResponse.medicalPolicyList;

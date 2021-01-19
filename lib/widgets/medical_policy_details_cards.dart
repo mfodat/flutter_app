@@ -3,7 +3,7 @@ import '../models/policy_card_dto.dart';
 import '../widgets/policy_card.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/products.dart';
+import '../providers/policies.dart';
 
 
 class MedicalPolicyDetailsCards extends StatefulWidget {
@@ -18,7 +18,7 @@ class MedicalPolicyDetailsCards extends StatefulWidget {
 class _MedicalPolicyDetailsCardsState extends State<MedicalPolicyDetailsCards> {
   @override
   Widget build(BuildContext context) {
-    final productsData = Provider.of<Products>(context);
+    final productsData = Provider.of<Policies>(context);
     final medicalPolicyList =  productsData.medicalPolicyDetailsResponse.medicalPolicyList;
    return  Scrollbar(
       child: ListView(

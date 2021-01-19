@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import './providers/tele_medicine.dart';
 import './screens/medical_policy_details_screen.dart';
-import './screens/screen.dart';
-import './screens/telemedicine_consultation_screen.dart';
 import './screens/policies_screen.dart';
-import 'providers/products.dart';
+import 'providers/policies.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/auth.dart';
 import 'screens/auth_screen.dart';
-import 'screens/products_overview_screen.dart';
 
 
 
@@ -23,13 +20,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProxyProvider<Auth, Products>(
-          update: (ctx, auth, previousProducts) => Products(
-            auth,
-            previousProducts == null ? [] : previousProducts.items,
+        ChangeNotifierProxyProvider<Auth, Policies>(
+          update: (ctx, auth, previousProducts) => Policies( auth,
           ),
         ),
-        ChangeNotifierProxyProvider< Products,TeleMedicine>(
+        ChangeNotifierProxyProvider< Policies,TeleMedicine>(
           update: (ctx, products, _ ) => TeleMedicine(
               langId: products.medicalPolicyDetailsRequest.langCode,
               policyNumber:  products.medicalPolicyDetailsRequest.policyNumber,
