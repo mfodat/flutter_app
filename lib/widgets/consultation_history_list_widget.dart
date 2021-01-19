@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../providers/tele_medicine.dart';
-import '../widgets/task_tile.dart';
+import '../widgets/consultation_history_widget.dart';
 import 'package:provider/provider.dart';
 
-class TasksList extends StatelessWidget {
+class ConsultationHistoryListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
@@ -13,7 +13,7 @@ class TasksList extends StatelessWidget {
         return ListView.builder(
           itemBuilder: (context, index) {
             final task =  memberHistoryList?.elementAt(index);
-            return TaskTile(
+            return ConsultationHistoryWidget(
               reference: task== null ? '' : task.referenceNumber ,
               date: task== null ? '' : task.submissionDate ,
               name: task== null ? '' : task.memberName ,

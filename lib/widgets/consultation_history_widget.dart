@@ -3,13 +3,13 @@ import '../providers/tele_medicine.dart';
 import '../screens/consultation_details_screen.dart';
 import 'package:provider/provider.dart';
 
-class TaskTile extends StatelessWidget {
+class ConsultationHistoryWidget extends StatelessWidget {
   final String reference;
   final String name;
   final String date;
   final String status;
   final int index;
-  TaskTile({this.reference, this.name, this.status, this.date,this.index});
+  ConsultationHistoryWidget({this.reference, this.name, this.status, this.date,this.index});
 
   @override
   Widget build(BuildContext context) {

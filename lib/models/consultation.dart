@@ -1,4 +1,4 @@
-class Task {
+class Consultation {
   final String name;
   final String referNumber;
   final String requestDate;
@@ -6,7 +6,7 @@ class Task {
   final String question;
   bool isDone;
 
-  Task({this.name, this.isDone = false,this.question,this.status
+  Consultation({this.name, this.isDone = false,this.question,this.status
   ,this.referNumber,this.requestDate});
 
   void toggleDone() {

@@ -4,7 +4,7 @@ import './telemedicine_consultation_screen.dart';
 import '../util/exception_handler.dart';
 import '../widgets/bottom_navigation_bar.dart';
 import '../widgets/filter_modal_bottom_sheet.dart';
-import '../widgets/tasks_list.dart';
+import '../widgets/consultation_history_list_widget.dart';
 import '../widgets/header.dart';
 import 'package:provider/provider.dart';
 
@@ -111,7 +111,7 @@ class _ShowHistoryScreenState extends State<ShowHistoryScreen> {
               children: <Widget>[
                 Header(),
                 Expanded(
-                  child: TasksList(),
+                  child: ConsultationHistoryListWidget(),
                 ),
               ],
             ),
