@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../classes/language.dart';
 import '../localization/language_constants.dart';
-import '../main.dart';
+import '../main3.dart';
 import '../router/route_constants.dart';
 
 class HomePage extends StatefulWidget {
@@ -63,9 +63,11 @@ class _HomePageState extends State<HomePage> {
       drawer: Drawer(
         child: _drawerList(),
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: _mainForm(context),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: _mainForm(context),
+        ),
       ),
     );
   }
@@ -129,6 +131,7 @@ class _HomePageState extends State<HomePage> {
             onTap: () async {
               FocusScope.of(context).requestFocus(FocusNode());
               await showDatePicker(
+                fieldHintText: 'test',
                 context: context,
                 initialDate: DateTime.now(),
                 firstDate: DateTime(DateTime.now().year),

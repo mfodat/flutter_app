@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../classes/language.dart';
 import '../localization/language_constants.dart';
-import '../main.dart';
+import '../main3.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({Key key}) : super(key: key);
