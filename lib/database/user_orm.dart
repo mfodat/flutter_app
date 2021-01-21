@@ -26,7 +26,12 @@ class UserORM {
   static const String COLUMN_USERNAME = "Username";
   static const String COMMA_SEP = ", ";
   static const String SQL_CREATE_TABLE =
-      '''CREATE TABLE User (fullName TEXT,customerID TEXT,   Username TEXT, Password TEXT)''';
+      '''CREATE TABLE User (fullName TEXT,customerID TEXT,   Username TEXT, Password TEXT,address TEXT, birthDate TEXT, birthYear TEXT,
+       EMail TEXT, fax TEXT, 
+       iqamahID TEXT, medCustomerID TEXT, mobile TEXT, nationality TEXT,
+        passChange TEXT, phone TEXT, pobox TEXT, preferredContact TEXT,
+         preferredLanguage TEXT,
+          telNumber1 TEXT)''';
   static const String SQL_DROP_TABLE = "DROP TABLE IF EXISTS User";
   static const String TABLE_NAME = "User";
   static const String TAG = "UserORM";
@@ -47,7 +52,7 @@ class UserORM {
     Map<String, dynamic> contentValues = {
       COLUMN_FULLNAME: loginResponseData.fullName,
       COLUMN_CUSTOMERID: loginResponseData.customerID,
-   /*   COLUMN_ADDRESS: loginResponseData.address,
+     COLUMN_ADDRESS: loginResponseData.address,
       COLUMN_BIRTHDATE: loginResponseData.birthDate,
       COLUMN_BIRTHYEAR: loginResponseData.birthYear,
 
@@ -63,7 +68,7 @@ class UserORM {
       COLUMN_PO_BOX: loginResponseData.pobox,
       COLUMN_PREFRED_CONTACT: loginResponseData.preferredContact,
       COLUMN_PREFERED_LANG: loginResponseData.preferredLanguage,
-      COLUMN_TEL_NUMBER: loginResponseData.telNumber1,*/
+      COLUMN_TEL_NUMBER: loginResponseData.telNumber1,
       COLUMN_USERNAME: userCredentials.userName,
       COLUMN_PASSWORD: userCredentials.password
     };
