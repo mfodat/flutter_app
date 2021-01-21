@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/database/login_response_data.dart';
+import 'package:flutter_app/database/user_credentails.dart';
 // change `flutter_database` to whatever your project name is
 import 'database/database_helper.dart';
+import 'database/user_orm.dart';
 
 void main() => runApp(MyApp());
 
@@ -56,38 +59,37 @@ class MyHomePage extends StatelessWidget {
   }
 
   // Button onPressed methods
-
+  UserORM userORM = new UserORM();
   void _insert() async {
     // row to insert
-    Map<String, dynamic> row = {
-      DatabaseHelper.columnName : 'Bob',
-      DatabaseHelper.columnAge  : 23
-    };
-    final id = await dbHelper.insert(row);
-    print('inserted row id: $id');
+    
+    LoginResponseData loginResponseData = new LoginResponseData();
+    loginResponseData.fullName= 'Mohammad Aodat';
+     loginResponseData.customerID= '2222';
+    UserCredentials userCredentials = UserCredentials();
+    userCredentials.userName='odat';
+    userCredentials.password = '1111111';
+    userORM.insertUser(loginResponseData, userCredentials);
   }
 
   void _query() async {
-    final allRows = await dbHelper.queryAllRows();
-    print('query all rows:');
-    allRows.forEach((row) => print(row));
+    UserCredentials userCredentials =  await userORM.getUserCredentials();
+    print('get User Credentials row userName:' + userCredentials.userName +
+        ',  password' + userCredentials.password);
+
   }
 
   void _update() async {
     // row to update
-    Map<String, dynamic> row = {
-      DatabaseHelper.columnId   : 1,
-      DatabaseHelper.columnName : 'Mary',
-      DatabaseHelper.columnAge  : 32
-    };
-    final rowsAffected = await dbHelper.update(row);
-    print('updated $rowsAffected row(s)');
+    UserCredentials userCredentials = UserCredentials();
+    userCredentials.userName='odat';
+    userCredentials.password = '33333';
+      userORM.updatePassword(userCredentials);
+
   }
 
   void _delete() async {
     // Assuming that the number of rows is the id for the last row.
-    final id = await dbHelper.queryRowCount();
-    final rowsDeleted = await dbHelper.delete(id);
-    print('deleted $rowsDeleted row(s): row $id');
+    userORM.clearUser();
   }
 }

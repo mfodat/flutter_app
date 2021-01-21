@@ -44,7 +44,7 @@ dev_dependencies:
     sdk: flutter
   shared_preferences: ^0.5.6+2
   sqflite: ^1.2.0
- # path_provider: ^1.5.1
+  path_provider: ^1.5.1
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
