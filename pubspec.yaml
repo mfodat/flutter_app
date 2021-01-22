@@ -45,6 +45,7 @@ dev_dependencies:
   shared_preferences: ^0.5.6+2
   sqflite: ^1.2.0
   path_provider: ^1.5.1
+  local_auth: ^0.6.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

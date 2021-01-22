@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/database/login_response_data.dart';
-import 'package:flutter_app/database/user_credentails.dart';
-// change `flutter_database` to whatever your project name is
-import 'database/database_helper.dart';
-import 'database/user_orm.dart';
-
+import 'package:flutter/services.dart';
+import 'package:local_auth/local_auth.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -20,76 +16,98 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
 
   // reference to our single class that manages the database
-  final dbHelper = DatabaseHelper.instance;
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
 
-  // homepage layout
+class _MyHomePageState extends State<MyHomePage> {
+  LocalAuthentication auth = new LocalAuthentication();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('sqflite'),
+        title: Text('Local Auth Example'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(
-              child: Text('insert', style: TextStyle(fontSize: 20),),
-              onPressed: () {_insert();},
-            ),
-            RaisedButton(
-              child: Text('query', style: TextStyle(fontSize: 20),),
-              onPressed: () {_query();},
-            ),
-            RaisedButton(
-              child: Text('update', style: TextStyle(fontSize: 20),),
-              onPressed: () {_update();},
-            ),
-            RaisedButton(
-              child: Text('delete', style: TextStyle(fontSize: 20),),
-              onPressed: () {_delete();},
-            ),
-          ],
+      body: Container(
+        padding: EdgeInsets.all(32.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text("can check biometrics $_canCheckBiometrics"),
+              RaisedButton(
+                child: Text('check biometrics', style: TextStyle(fontSize: 20),),
+                onPressed: () {_checkBiometrics();},
+              ),
+              Text("Available biometrics $_availableBiometrics"),
+              RaisedButton(
+                child: Text('get Available biometrics', style: TextStyle(fontSize: 20),),
+                onPressed: () {_getAvailableBiometrics();},
+              ),
+              Text("current state $_auth"),
+              RaisedButton(
+                child: Text('Auth', style: TextStyle(fontSize: 20),),
+                onPressed: () {_Auth();},
+              ),
+
+            ],
+          ),
         ),
       ),
     );
   }
 
-  // Button onPressed methods
-  UserORM userORM = new UserORM();
-  void _insert() async {
-    // row to insert
-    
-    LoginResponseData loginResponseData = new LoginResponseData();
-    loginResponseData.fullName= 'Mohammad Aodat';
-     loginResponseData.customerID= '2222';
-    UserCredentials userCredentials = UserCredentials();
-    userCredentials.userName='odat';
-    userCredentials.password = '1111111';
-    userORM.insertUser(loginResponseData, userCredentials);
+bool _canCheckBiometrics;
+  List<BiometricType>  _availableBiometrics ;
+  String _auth = 'Not Authorized';
+  Future<void> _checkBiometrics() async {
+    bool canCheckBiometrics;
+   try{
+     canCheckBiometrics =await auth.canCheckBiometrics;
+   } on PlatformException catch(e){
+     print(e);
+   }
+   if(! mounted) return;
+  //  _canCheckBiometrics
+   setState(() {
+     _canCheckBiometrics=canCheckBiometrics;
+   });
   }
 
-  void _query() async {
-    UserCredentials userCredentials =  await userORM.getUserCredentials();
-    print('get User Credentials row userName:' + userCredentials.userName +
-        ',  password' + userCredentials.password);
+  Future<void> _getAvailableBiometrics() async {
+    List<BiometricType>   availableBiometrics ;
+    try{
+      availableBiometrics = await auth.getAvailableBiometrics();
+    } on PlatformException catch(e){
+      print(e);
+    }
+    if(! mounted) return;
+    //  _canCheckBiometrics
+    setState(() {
+      _availableBiometrics=availableBiometrics;
+    });
 
   }
 
-  void _update() async {
-    // row to update
-    UserCredentials userCredentials = UserCredentials();
-    userCredentials.userName='odat';
-    userCredentials.password = '33333';
-      userORM.updatePassword(userCredentials);
+  Future<void> _Auth() async {
 
+    bool authin =false;
+    try{
+      authin =await auth.authenticateWithBiometrics(localizedReason: 'scan your fingure',
+          stickyAuth: true,
+      useErrorDialogs: true);
+    } on PlatformException catch(e){
+      print(e);
+    }
+    if(! mounted) return;
+    //  _canCheckBiometrics
+    setState(() {
+      _auth =  authin ? 'Authorized':'Not Authorized';
+    });
   }
 
-  void _delete() async {
-    // Assuming that the number of rows is the id for the last row.
-    userORM.clearUser();
-  }
+
 }
