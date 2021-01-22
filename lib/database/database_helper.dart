@@ -1,21 +1,16 @@
 import 'dart:io';
-
-import 'package:flutter_app/database/user_orm.dart';
+import './policy_orm.dart';
+import './user_orm.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'branch_orm.dart';
 
 class DatabaseHelper {
 
   static final _databaseName = "MyDatabase.db";
   static final _databaseVersion = 3;
-
-  static final table = 'my_table';
-
-  //static final columnId = '_id';
- // static final columnName = 'name';
-  //static final columnAge = 'age';
-
   // make this a singleton class
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -43,9 +38,13 @@ class DatabaseHelper {
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
     await db.execute(UserORM.SQL_CREATE_TABLE);
+    await db.execute(PolicyORM.SQL_CREATE_TABLE);
+    await db.execute(BranchORM.SQL_CREATE_TABLE);
   }
   Future _onUpgrade(Database db,int oldVersion, int newVersion) async {
     await db.execute(UserORM.SQL_DROP_TABLE);
+    await db.execute(PolicyORM.SQL_DROP_TABLE);
+    await db.execute(BranchORM.SQL_DROP_TABLE);
     await _onCreate(  db,   newVersion);
   }
 

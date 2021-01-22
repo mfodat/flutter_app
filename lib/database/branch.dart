@@ -1,0 +1,21 @@
+class Branch{
+     String address;
+     String address_ar;
+     String area;
+     String area_ar;
+     String branchnumber;
+     String city;
+     String city_ar;
+     String dateForCache;
+     String email;
+     String fax;
+     String latitude;
+     String latitudelongitude;
+     String longitude;
+     String mobilenumber;
+     String name;
+     String name_ar;
+     String type;
+     String workhours;
+     String workhours_ar;
+}
