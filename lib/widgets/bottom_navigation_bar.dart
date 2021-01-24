@@ -1,106 +1,109 @@
 import 'package:flutter/material.dart';
 import '../screens/show_history_screen.dart';
 
-const Color imageIconColor = Colors.white;
-const Color barItemBGColor= Colors.red;
-const Color barBgColor = Colors.blueGrey;
-const double imageSize = 30;
-const double fontSize = 10;
+const Color imageIconColor = Colors.blue;
+  const Color barItemBGColor =Colors.grey;
+const Color barBgColor =  Colors.red;
+const double imageSize = 70;
+const double fontSize = 20;
 
-class MedicalPolicesBottomNavigationBar extends StatelessWidget {
+class MedicalPolicesBottomNavigationBar extends StatefulWidget {
+
+  @override
+  _MedicalPolicesBottomNavigationBarState createState() => _MedicalPolicesBottomNavigationBarState();
+}
+
+class _MedicalPolicesBottomNavigationBarState extends State<MedicalPolicesBottomNavigationBar> {
+  int currentTab=0;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            activeIcon: ImageIcon(
+              AssetImage("images/group.png"),
+              color: Colors.deepPurple,
+              size: imageSize,
 
+            ),
             icon: ImageIcon(
-              AssetImage("images/telemedicine.png"),
-              color: imageIconColor,
+              AssetImage("images/group.png"),
+              color: Colors.green,
               size: imageSize,
             ),
             // label: 'telemedicine',
-            title: Text('telemedicine',style: TextStyle(fontSize: fontSize),),
+            title: Text(
+              'Login',
+              style: TextStyle(fontSize: fontSize, color: Colors.black),
+            ),
+
             backgroundColor: barItemBGColor,
           ),
           BottomNavigationBarItem(
 
             icon: ImageIcon(
-              AssetImage("images/my_claim.png"),
+              AssetImage("images/request.png"),
               color: imageIconColor,
               size: imageSize,
             ),
             // label: 'Approvals',
-            title: Text('Approvals',style: TextStyle(fontSize: fontSize),),
+            title: Text(
+              'request',
+              style: TextStyle(fontSize: fontSize),
+            ),
             backgroundColor: barItemBGColor,
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(
-              AssetImage("images/policy_dwaee.png"),
+              AssetImage("images/location.png"),
               color: imageIconColor,
               size: imageSize,
             ),
             //   label: 'dwaee',
-            title: Text('dwaee',style: TextStyle(fontSize: fontSize),),
+            title: Text(
+              'location',
+              style: TextStyle(fontSize: fontSize),
+            ),
             backgroundColor: barItemBGColor,
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(
-              AssetImage("images/policy_eligibility.png"),
+              AssetImage("images/customer_service.png"),
               color: imageIconColor,
               size: imageSize,
             ),
             //  label: 'Eligibility',
-            title: Text('Eligibility',style: TextStyle(fontSize: fontSize),),
+            title: Text(
+              'Contact us',
+              style: TextStyle(fontSize: fontSize),
+            ),
             backgroundColor: barItemBGColor,
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(
-              AssetImage("images/policy_benefits.png"),
+              AssetImage("images/cart.png"),
               color: imageIconColor,
               size: imageSize,
             ),
             // label: 'Benefits',
-            title: Text('Benefits',style: TextStyle(fontSize: fontSize),),
+            title: Text(
+              'cart',
+              style: TextStyle(fontSize: fontSize),
+            ),
             backgroundColor: barItemBGColor,
           ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage("images/policy_provider.png"),
-              color: imageIconColor,
-              size: imageSize,
-            ),
-            //label: 'provider',
-            title: Text('provider',style: TextStyle(fontSize: fontSize),),
-            backgroundColor: barItemBGColor ,
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage("images/policy_reimburse.png"),
-              color: imageIconColor,
-              size: imageSize,
-            ),
-            //label: 'reimburse',
-            title: Text('reimburse',style: TextStyle(fontSize: fontSize),),
-
-            backgroundColor: imageIconColor,
-          )
         ],
-        backgroundColor:barBgColor ,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 1,
+       backgroundColor: barBgColor,
+        type: BottomNavigationBarType.shifting,
+        currentIndex: currentTab,
+
         selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white,
+        unselectedItemColor: Colors.deepPurple,
         iconSize: 40,
         onTap: (int index) {
-          Navigator.push(
-            context,
-            new MaterialPageRoute(builder: (context) {
-              return ShowHistoryScreen();
-            }),
-          );
-
+          setState(() {
+            currentTab = index;
+          });
         },
         elevation: 5);
   }
