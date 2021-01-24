@@ -63,6 +63,9 @@ flutter:
     - assets/images/MD.png
     - assets/images/MD.jpg
     - images/
+    - images/icon1.png
+    - images/icon2x.png
+    - images/icon3x.png
     - lib/lang/en.json
     - lib/lang/ar.json
     - lib/lang/fa.json
