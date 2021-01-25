@@ -63,7 +63,7 @@ flutter:
     - assets/images/MD.png
     - assets/images/MD.jpg
     - images/
-    - images/group.png
+    - images/login.png
     - images/cart.png
     - images/customer_service.png
     - images/location.png

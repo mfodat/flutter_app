@@ -171,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       textAlign: TextAlign.start,
                     ),
                     SizedBox(
-                      width: 70.0,
+                      width: 10.0,
                     ),
                     Text('Forgot Password?',
                         style: TextStyle(
