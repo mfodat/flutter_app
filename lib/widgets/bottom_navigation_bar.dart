@@ -18,7 +18,7 @@ class _MedicalPolicesBottomNavigationBarState
   final notSelectedColor = Colors.grey[300];
   final selectedColor = Colors.white;
   final numberOfIcon = 5;
-  final height = 120.0;
+  final height = 70.0;
   var screenSize;
   int _selectedIndex = 3;
   @override
