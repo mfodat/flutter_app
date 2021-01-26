@@ -29,9 +29,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List  _colors = [
-    Colors.blue,
-    Colors.green,
-    Colors.red,
+    Color.fromRGBO(255, 251, 247, 1),
+    Color.fromRGBO(255, 251, 247, 1),
+    Color.fromRGBO(255, 251, 247, 1),
   ];
   int selectedIndex = 0;
   @override
@@ -42,10 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
     ]);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHight = MediaQuery.of(context).size.height;
-    final backgroundColor = Colors.red;
-    //double radius = screenWidth * 5 / 4;
+    final backgroundColor = Color.fromRGBO(253, 253, 253, 1);
+    double radius = screenHight * .6;
 
-    double radius = 800 * screenWidth / (screenHight - 100);
+   // double radius = 800 * screenWidth / (screenHight - 100);
     print('screenWidth $screenWidth');
     print('screenHight $screenHight');
     print('radius $radius');
@@ -54,63 +54,65 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: MedicalPolicesBottomNavigationBar(),
-        // backgroundColor: backgroundColor,
+         backgroundColor: backgroundColor,
         body: Stack(
           children: [
             Positioned(
-              top: radius + top + 25,
-              //height: 200.0,
+              top: screenHight * .31,
+              bottom: 0,
               left: 2,
-              child: Column(
-                children: [
-                  Container(
-                    color: _colors[selectedIndex],
-                    width: screenWidth - 4,
-                    height: (screenHight - 125 - radius - top) / 3,
-                    child: Text('by'),
-                  ),
-                  Container(
-                    color: _colors[selectedIndex],
-                    width: screenWidth - 4,
-                    height: (screenHight - 125 - radius - top) / 3,
-                    child: Text('by'),
-                  ),
-                  Container(
-                    color: _colors[selectedIndex],
-                    width: screenWidth - 4,
-                    height: (screenHight - 125 - radius - top) / 3,
-                    child: Text('by'),
-                  ),
-                ],
+              right: 2,
+              child: Container(
+                padding: EdgeInsets.all(8.0),
+               // color: Colors.green,
+               // height: double.infinity,
+                child: GridView.count(
+
+                  crossAxisCount: 2 ,
+                  children: List.generate(6,(index){
+                    return Container(
+                      padding: EdgeInsets.all(8.0),
+                      height: 20,
+                      width: 280,
+                      child: Card(
+
+                        //color: Colors.blue,
+                      ),
+                    );
+                  },growable:false,),
+                ),
+                ),
               ),
-            ),
             Positioned(
-              top: screenWidth * -0.6,
-              //height: 200.0,
-              left: screenWidth * -1 / 8,
+             top: screenHight * -0.0,
+              bottom: screenHight * .6,
+           //   height: 700.0,
+              left: -50,
+              right: -50,
               child: Container(
                 //  color: Colors.yellow,
-                width: radius,
-                height: radius,
+                //width: radius ,
+              //  height: radius,
                 child: Text('by'),
                 decoration: BoxDecoration(
-                  color: Colors.blueGrey,
+                  color: Color.fromRGBO(2, 83, 115, 1),
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(radius),
                     bottomLeft: Radius.circular(radius),
-                    topRight: Radius.circular(radius),
-                    topLeft: Radius.circular(radius),
+                  //  topRight: Radius.circular(radius),
+                 //   topLeft: Radius.circular(radius),
                   ),
                 ),
               ),
             ),
-            Positioned(
-              top: radius / 7,
+             Positioned(
+              top: screenHight * .11,
               left: 0,
               right: 0,
               child: Column(
                 children: [
                   CarouselSlider(
+                    height: screenHight * .2,
                     onPageChanged: (index) { print(' index $index');
                     setState(() {
                       selectedIndex = (index+1)%3;
@@ -124,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           return Container(
                             width: screenWidth ,
                             margin: EdgeInsets.symmetric( horizontal: 5),
-                            height: radius / 3,
+
                             child: Text(' '),
                             decoration: BoxDecoration(
                               boxShadow: [
@@ -176,7 +178,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -204,7 +205,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),*/
