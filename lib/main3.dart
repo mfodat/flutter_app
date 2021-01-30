@@ -15,6 +15,8 @@ class MyApp extends StatefulWidget {
     state.setLocale(newLocale);
   }
 
+
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -26,6 +28,8 @@ class _MyAppState extends State<MyApp> {
       _locale = locale;
     });
   }
+
+
 
   @override
   void didChangeDependencies() {
@@ -57,8 +61,8 @@ class _MyAppState extends State<MyApp> {
         locale: _locale,
         supportedLocales: [
           Locale("en", "US"),
-          Locale("fa", "IR"),
           Locale("ar", "SA"),
+          Locale("fa", "IR"),
           Locale("hi", "IN")
         ],
         localizationsDelegates: [

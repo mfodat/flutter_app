@@ -1,4 +1,19 @@
 {
+    "login_lanaguageLabel": "ع",
+    "login_welcomeLabel": "Welcome back,",
+    "login_loginLabel": "Login",
+    "login_usernameLabel":"Username",
+    "login_usernameHint":"Enter Your Username",
+    "login_passwordLabel":"Password",
+    "login_passwordHint":"Enter Your Password",
+    "login_rememberLabel":"Remember me",
+    "login_forgetPasswordLabel":"Forgot Password?",
+    "login_areYouNewLabel":"Are you new ?",
+    "login_submitButtonLabel":"Login",
+    "login_createAccountLabel":"Create Account",
+
+
+
     "home_page": "Home Page",
     "personal_information": "Personal Information",
     "name": "Name",

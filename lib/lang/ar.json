@@ -1,4 +1,21 @@
 {
+    "login_lanaguageLabel": "E",
+    "login_welcomeLabel": "اهلا وسهلا",
+    "login_loginLabel": "دخول",
+    "login_usernameLabel":"اسم المستخدم",
+    "login_usernameHint":"اسم المستخدم",
+    "login_passwordLabel":"كلمة السر",
+    "login_passwordHint":"كلمة السر",
+    "login_rememberLabel":"تذكرني",
+    "login_forgetPasswordLabel":"نسيت كلمة السر؟",
+    "login_areYouNewLabel":"هل انت مستخدم جديد؟",
+    "login_submitButtonLabel":"دخول",
+    "login_createAccountLabel":"انشاء حساب",
+
+
+
+
+
     "home_page": "الصفحة الرئيسية",
     "personal_information": "معلومات شخصية",
     "name": "اسم",

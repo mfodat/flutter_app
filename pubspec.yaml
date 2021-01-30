@@ -66,6 +66,7 @@ flutter:
     - assets/images/MD.jpg
     - images/
     - images/login.png
+    - images/fingerprint.png
     - images/cart.png
     - images/customer_service.png
     - images/location.png
@@ -98,5 +99,23 @@ flutter:
     - family: Anton
       fonts:
         - asset: assets/fonts/Anton-Regular.ttf
-  # For details regarding fonts from package dependencies,
+
+    - family: Geeza Pro
+      fonts:
+        - asset: assets/fonts/Geeza-Pro-Regular.ttf
+        - asset: assets/fonts/Geeza-Pro-Bold.ttf
+
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-LightItalic.ttf
+          weight: 300
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+
+
+
+
+          # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
