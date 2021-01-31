@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/database/login_response_data.dart';
 import 'package:flutter_app/database/user_credentails.dart';
+import 'package:flutter_app/soap/model/customer_login_client.dart';
 // change `flutter_database` to whatever your project name is
 import 'database/database_helper.dart';
 import 'database/user_orm.dart';
@@ -63,12 +64,9 @@ class MyHomePage extends StatelessWidget {
   void _insert() async {
     // row to insert
     
-    LoginResponseData loginResponseData = new LoginResponseData();
-    loginResponseData.fullName= 'Mohammad Aodat';
-     loginResponseData.customerID= '2222';
-    UserCredentials userCredentials = UserCredentials();
-    userCredentials.userName='odat';
-    userCredentials.password = '1111111';
+    Customer loginResponseData = new Customer(fullName: 'Mohammad Aodat',customerID: '2234');
+
+    UserCredentials userCredentials = UserCredentials(userName:'odat',password: '1111111' );
     userORM.insertUser(loginResponseData, userCredentials);
   }
 
@@ -81,9 +79,7 @@ class MyHomePage extends StatelessWidget {
 
   void _update() async {
     // row to update
-    UserCredentials userCredentials = UserCredentials();
-    userCredentials.userName='odat';
-    userCredentials.password = '33333';
+    UserCredentials userCredentials = UserCredentials(userName:'odat',password: '1111111d' );
       userORM.updatePassword(userCredentials);
 
   }

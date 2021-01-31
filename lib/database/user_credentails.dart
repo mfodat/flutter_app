@@ -1,4 +1,5 @@
 class UserCredentials {
-  String password;
-  String userName;
+ final String password;
+  final String userName;
+ UserCredentials({this.password,this.userName});
 }

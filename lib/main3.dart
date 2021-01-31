@@ -6,6 +6,8 @@ import './router/custom_router.dart';
 import './router/route_constants.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'app/page/about.dart';
+import 'app/page/login.dart';
 import 'localization/language_constants.dart';
 
 void main() => runApp(MyApp());
@@ -87,7 +89,8 @@ class _MyAppState extends State<MyApp> {
               return supportedLocales.first;
             },
             onGenerateRoute: CustomRouter.generatedRoute,
-            initialRoute: homeRoute,
+            home: auth.isAuth ? AboutPage()  :  Login(),
+           // home: auth.isAuth ?,
           ),
         ),
       );

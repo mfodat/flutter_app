@@ -39,8 +39,8 @@ final _medicalPolicyDetailsClient = MedicalPolicyDetailsClient();
       }
     }
 
-    String username = this.auth.customerLoginRequest.username;
-    String password = this.auth.customerLoginRequest.password;
+    String username = this.auth.customerLoginRequest.userCredentials.userName;
+    String password = this.auth.customerLoginRequest.userCredentials.password;
     String langCode = this.auth.customerLoginRequest.langCode;
     String  medicalCustomerId=this.auth.customerLoginResponse.customer.medCustomerID;
     String idNumber = this.auth.customerLoginResponse.customer.iqamahID;
@@ -74,8 +74,8 @@ final _medicalPolicyDetailsClient = MedicalPolicyDetailsClient();
 
 
   Future<void> fetchAndSetPolicies() async {
-   String username = this.auth.customerLoginRequest.username;
-   String password = this.auth.customerLoginRequest.password;
+   String username = this.auth.customerLoginRequest.userCredentials.userName;
+   String password = this.auth.customerLoginRequest.userCredentials.password;
    String langCode = this.auth.customerLoginRequest.langCode;
     try{
     PolicyInformationRequest policyInformationReq = PolicyInformationRequest(

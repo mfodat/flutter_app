@@ -67,6 +67,7 @@ flutter:
     - images/
     - images/login.png
     - images/fingerprint.png
+    - images/fingerprint2.png
     - images/cart.png
     - images/customer_service.png
     - images/location.png

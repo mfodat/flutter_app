@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/app/page/login.dart';
-import '../pages/about_page.dart';
-import '../pages/home_page.dart';
+import '../app/page/login.dart';
+import '../app/page/about.dart';
 import '../pages/not_found_page.dart';
 import '../pages/settings_page.dart';
 import '../router/route_constants.dart';

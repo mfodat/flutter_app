@@ -87,4 +87,9 @@ class DatabaseHelper {
     return await db.delete(table, where: where, whereArgs: whereArgs);
   }
 
+  Future<void> drop(String table) async {
+    Database db = await instance.database;
+    return await db.execute(table);
+  }
+
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_app/database/user_credentails.dart';
 import 'package:xml/xml.dart';
 import '../soap_client.dart';
 
@@ -49,15 +50,17 @@ class Customer {
   final String mobile;
   final String medCustomerID;
   final String iqamahID;
-  final String EMail;
+ // final String EMail;
+  final String phone;
+  final String telNumber1;
 
 
 
 
   Customer({this.fullName, this.birthYear , this.eMail, this.nationality,
-  this.address,this.birthDate,this.customerID,this.EMail,this.iqamahID,
+  this.address,this.birthDate,this.customerID,this.iqamahID,
   this.medCustomerID,this.mobile,this.passChange,this.preferredContact,
-  this.preferredLanguage,this.resultCode,this.resultDescription,this.zipCode
+  this.preferredLanguage,this.resultCode,this.resultDescription,this.zipCode,this.phone,this.telNumber1
   });
 
   factory Customer.fromXml(XmlElement CustomerNode) {
@@ -71,7 +74,7 @@ class Customer {
       address: CustomerNode.findElements('address').first.text,
       birthDate: CustomerNode.findElements('birthDate').first.text,
       customerID: CustomerNode.findElements('customerID').first.text,
-      EMail: CustomerNode.findElements('EMail').first.text,
+
       iqamahID: CustomerNode.findElements('iqamahID').first.text,
       medCustomerID: CustomerNode.findElements('medCustomerID').first.text,
       mobile: CustomerNode.findElements('mobile').first.text,
@@ -80,6 +83,8 @@ class Customer {
       preferredLanguage: CustomerNode.findElements('preferredLanguage').first.text,
       resultCode: CustomerNode.findElements('resultCode').first.text,
       resultDescription: CustomerNode.findElements('resultDescription').first.text,
+      phone: CustomerNode.findElements('phone').first.text,
+      telNumber1: CustomerNode.findElements('telNumber1').first.text,
     );
   }
 }
@@ -87,10 +92,9 @@ class Customer {
 @immutable
 class CustomerLoginRequest {
   final  String langCode;
-  final String password;
-  final String username;
+  final UserCredentials userCredentials;
 
-  CustomerLoginRequest({this.username, this.password, this.langCode});
+  CustomerLoginRequest({this.userCredentials, this.langCode});
   String xmlToString(){
     var request = toXml();
      String s = SoapClient().xmlElementToString(request);
@@ -106,8 +110,8 @@ class CustomerLoginRequest {
       xml.element('arg0', nest: ()
       {
         xml.element('langCode', nest: langCode);
-        xml.element('password', nest: password);
-        xml.element('username', nest: username);
+        xml.element('password', nest: userCredentials.password);
+        xml.element('username', nest: userCredentials.userName);
       });
 
     });
