@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/classes/language.dart';
+import 'package:flutter_app/providers/auth.dart';
+import 'package:flutter_app/util/exception_handler.dart';
 import 'package:flutter_app/widgets/bottom_navigation_bar.dart';
+import 'package:provider/provider.dart';
 import '../../localization/language_constants.dart';
 import '../../main3.dart';
 
@@ -24,15 +27,66 @@ class _LoginState extends State<Login> {
     });
     super.didChangeDependencies();
   }
+  Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+  };
+  var _isLoading = false;
+  Future<void> _submit() async {
+    if (!_formKey.currentState.validate()) {
+      // Invalid!
+      return;
+    }
+    _formKey.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+
+        // Log user in
+        await Provider.of<Auth>(context, listen: false).login(
+          _authData['userName'],
+          _authData['password'],
+        );
+
+
+    } catch (error) {
+      var errorMessage = ExceptionHandler.handelException(error);
+      _showErrorDialog(errorMessage);
+    }
+
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
   Locale _locale ;
   bool valuefirst = false;
+  final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHight = MediaQuery.of(context).size.height;
 
     return Container(
-      color: Colors.red,
+      color: Color.fromRGBO(88, 141, 162, 1),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
@@ -157,12 +211,22 @@ class _LoginState extends State<Login> {
                     // color: Colors.red,
                     padding:
                         const EdgeInsets.only(left: 5.0, right: 0.0, top: 5.0),
-                    child: TextField(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty || !value.contains('@')) {
+                          return 'Invalid email!';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _authData['userName'] = value;
+                      },
                       decoration: InputDecoration(
                         hintText:  getTranslated(context, 'login_usernameHint'),//'Enter your Username',
                         focusColor: Colors.amber,
                         isDense: true, // Added this
                         contentPadding: EdgeInsets.all(13),
+
 
                         // filled: true,
                         //  fillColor: Color(0xFFDBEDFF),
@@ -194,8 +258,29 @@ class _LoginState extends State<Login> {
                     // color: Colors.red,
                     padding:
                         const EdgeInsets.only(left: 5.0, right: 0.0, top: 5.0),
-                    child: TextField(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty || value.length < 2) {
+                          return 'Password is too short!';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _authData['password'] = value;
+                      },
+                      obscureText: true,
                       decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                                  Icons.visibility,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          onPressed: () {
+                          },
+                        ),
+                        /*icon: const Padding(
+                            padding: const EdgeInsets.only(top: 15.0),
+                            child: const Icon(Icons.lock)),*/
                         isDense: true, // Added this
                         contentPadding: EdgeInsets.all(13),
                         hintText: getTranslated(context, 'login_passwordHint'),
@@ -276,7 +361,9 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.only(
                           right: 20.0, left: 20.0, top: 20.0),
                       // color: Colors.green,
-                      child: RaisedButton(
+                      child:  _isLoading ?
+                      CircularProgressIndicator()
+                : RaisedButton(
                         child: Text(getTranslated(context, 'login_submitButtonLabel'),),
                         onPressed: () {},
                         shape: RoundedRectangleBorder(
