@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/providers/auth.dart';
+import 'package:provider/provider.dart';
 import './localization/demo_localization.dart';
 import './router/custom_router.dart';
 import './router/route_constants.dart';
@@ -15,8 +17,6 @@ class MyApp extends StatefulWidget {
     state.setLocale(newLocale);
   }
 
-
-
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -28,8 +28,6 @@ class _MyAppState extends State<MyApp> {
       _locale = locale;
     });
   }
-
-
 
   @override
   void didChangeDependencies() {
@@ -51,37 +49,47 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     } else {
-     // new MaterialApp(lo);
+      // new MaterialApp(lo);
       var fontSize = TextStyle(fontSize: 4.0);
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "Flutter Localization Demo",
-        theme: ThemeData(primarySwatch: Colors.blue,
+      return MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+            value: Auth(),
+          ),
+        ],
+        child: Consumer<Auth>(
+          builder: (ctx, auth, _) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: "Flutter Localization Demo",
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            locale: _locale,
+            supportedLocales: [
+              Locale("en", "US"),
+              Locale("ar", "SA"),
+              Locale("fa", "IR"),
+              Locale("hi", "IN")
+            ],
+            localizationsDelegates: [
+              DemoLocalization.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            localeResolutionCallback: (locale, supportedLocales) {
+              for (var supportedLocale in supportedLocales) {
+                if (supportedLocale.languageCode == locale.languageCode &&
+                    supportedLocale.countryCode == locale.countryCode) {
+                  return supportedLocale;
+                }
+              }
+              return supportedLocales.first;
+            },
+            onGenerateRoute: CustomRouter.generatedRoute,
+            initialRoute: homeRoute,
+          ),
         ),
-        locale: _locale,
-        supportedLocales: [
-          Locale("en", "US"),
-          Locale("ar", "SA"),
-          Locale("fa", "IR"),
-          Locale("hi", "IN")
-        ],
-        localizationsDelegates: [
-          DemoLocalization.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        localeResolutionCallback: (locale, supportedLocales) {
-          for (var supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale.languageCode &&
-                supportedLocale.countryCode == locale.countryCode) {
-              return supportedLocale;
-            }
-          }
-          return supportedLocales.first;
-        },
-        onGenerateRoute: CustomRouter.generatedRoute,
-        initialRoute: homeRoute,
       );
     }
   }
