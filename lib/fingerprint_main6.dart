@@ -24,7 +24,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  LocalAuthentication auth = new LocalAuthentication();
+  LocalAuthentication biometricsAuth = new LocalAuthentication();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +66,7 @@ bool _canCheckBiometrics;
   Future<void> _checkBiometrics() async {
     bool canCheckBiometrics;
    try{
-     canCheckBiometrics =await auth.canCheckBiometrics;
+     canCheckBiometrics =await biometricsAuth.canCheckBiometrics;
    } on PlatformException catch(e){
      print(e);
    }
@@ -80,7 +80,7 @@ bool _canCheckBiometrics;
   Future<void> _getAvailableBiometrics() async {
     List<BiometricType>   availableBiometrics ;
     try{
-      availableBiometrics = await auth.getAvailableBiometrics();
+      availableBiometrics = await biometricsAuth.getAvailableBiometrics();
     } on PlatformException catch(e){
       print(e);
     }
@@ -96,7 +96,7 @@ bool _canCheckBiometrics;
 
     bool authin =false;
     try{
-      authin =await auth.authenticateWithBiometrics(localizedReason: 'scan your fingure',
+      authin =await biometricsAuth.authenticateWithBiometrics(localizedReason: 'scan your fingure',
           stickyAuth: true,
       useErrorDialogs: true);
     } on PlatformException catch(e){

@@ -41,7 +41,9 @@ class _LoginState extends State<Login> {
           _passwordController.text = _authData[Auth.PASSWORD];
           prefRead = true;
         });
-
+        if(authData[Auth.IS_REMEMBER_ME] || authData[Auth.IS_USING_BIOMETRIC]){
+          _submit();
+        }
       });
     }
     getLocale().then((locale) {
@@ -57,6 +59,8 @@ class _LoginState extends State<Login> {
     Auth.PASSWORD: '',
     Auth.IS_USING_BIOMETRIC: false,
     Auth.IS_REMEMBER_ME: false,
+    Auth.IS_FINGER_BIOMETRIC_SUPPORTED: false,
+
   };
   var _isLoading = false;
   Future<void> _submit() async {
@@ -371,7 +375,7 @@ class _LoginState extends State<Login> {
                         ],
                       ),
                     ), //Remember Me and forget Label
-                    Center(
+                    _authData[Auth.IS_FINGER_BIOMETRIC_SUPPORTED] ? Center(
                       child: GestureDetector(
                         onTap: () {
                           print("Tapped on fingerprint ");
@@ -391,7 +395,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                    ), //finger print
+                    ) : SizedBox(height: 2.0,), //finger print
                     Center(
                       child: Container(
                         width: double.infinity,
