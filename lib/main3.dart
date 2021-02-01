@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
               return supportedLocales.first;
             },
             onGenerateRoute: CustomRouter.generatedRoute,
-            home: auth.isAuth ? AboutPage()  :  Login(),
+            home:  Login(),
            // home: auth.isAuth ?,
           ),
         ),

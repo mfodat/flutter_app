@@ -1,116 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/classes/language.dart';
 import 'package:flutter_app/providers/auth.dart';
-import 'package:flutter_app/util/exception_handler.dart';
 import 'package:flutter_app/widgets/bottom_navigation_bar.dart';
-import 'package:provider/provider.dart';
 import '../../localization/language_constants.dart';
-import '../../main3.dart';
-
+import 'login_base.dart';
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
-  bool prefRead = false;
-
-  void _changeLanguage(Language language) async {
-    Locale _locale = await setLocale(language.languageCode);
-    MyApp.setLocale(context, _locale);
-
-  }
-
-  @override
-  void initState() {
-
-
-    super.initState();
-  }
+class _LoginState extends LoginBase {
   @override
   void didChangeDependencies() {
-   print('prefRead $prefRead');
-    if(!prefRead) {
-      Provider.of<Auth>(context, listen: false).getLoginInfoFromPref().then((
-          authData) {
-        if (!mounted) return;
-        print('prefRead $prefRead');
-        setState(() {
-          _authData = authData;
-          _userNameController.text = _authData[Auth.USERNAME];
-          _passwordController.text = _authData[Auth.PASSWORD];
-          prefRead = true;
-        });
-        if(authData[Auth.IS_REMEMBER_ME] || authData[Auth.IS_USING_BIOMETRIC]){
-          _submit();
-        }
-      });
-    }
-    getLocale().then((locale) {
-      setState(() {
-        this._locale = locale;
-      });
-    });
     super.didChangeDependencies();
-
   }
-  Map<String, dynamic> _authData = {
-    Auth.USERNAME: '',
-    Auth.PASSWORD: '',
-    Auth.IS_USING_BIOMETRIC: false,
-    Auth.IS_REMEMBER_ME: false,
-    Auth.IS_FINGER_BIOMETRIC_SUPPORTED: false,
-
-  };
-  var _isLoading = false;
-  Future<void> _submit() async {
-    if (!_formKey.currentState.validate()) {
-      // Invalid!
-      return;
-    }
-    _formKey.currentState.save();
-    setState(() {
-      _isLoading = true;
-    });
-    try {
-
-        // Log user in
-        await Provider.of<Auth>(context, listen: false).login( _authData);
-
-
-    } catch (error) {
-      var errorMessage = ExceptionHandler.handelException(error);
-      _showErrorDialog(errorMessage);
-    }
-
-
-    setState(() {
-      _isLoading = false;
-    });
-  }
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred!'),
-        content: Text(message),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Okay'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
-    );
-  }
-  Locale _locale ;
-
-  final _userNameController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  final GlobalKey<FormState> _formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -122,7 +25,7 @@ class _LoginState extends State<Login> {
         child: Scaffold(
           backgroundColor: Colors.white,
           body: Form(
-          key: _formKey,
+          key: formKey,
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(left: 23.0, top: 0.0,right: 23.0),
@@ -148,15 +51,15 @@ class _LoginState extends State<Login> {
                           child: GestureDetector(
                             onTap: () {
                               print("Tapped on container GestureDetector");
-                              if(_locale?.languageCode == 'en') {
-                                _changeLanguage(Language.languageList()[1]);
+                              if(locale?.languageCode == 'en') {
+                                changeLanguage(Language.languageList()[1]);
                               }else{
-                                _changeLanguage(Language.languageList()[0]);
+                                changeLanguage(Language.languageList()[0]);
                               }
-                              print(_locale.languageCode);
+                              print(locale.languageCode);
                             },
                             child: Container(
-                              alignment:  _locale?.languageCode == 'en'?
+                              alignment:  locale?.languageCode == 'en'?
                               Alignment.centerRight : Alignment.centerLeft ,
 
                               // color: Colors.red,
@@ -245,7 +148,7 @@ class _LoginState extends State<Login> {
                       padding:
                           const EdgeInsets.only(left: 5.0, right: 0.0, top: 5.0),
                       child: TextFormField(
-                        controller: this._userNameController,
+                        controller: this.userNameController,
                         validator: (value) {
                           if (value.isEmpty ) {
                             return 'Invalid email!';
@@ -253,7 +156,7 @@ class _LoginState extends State<Login> {
                           return null;
                         },
                         onSaved: (value) {
-                          _authData[ Auth.USERNAME] = value;
+                          authData[ Auth.USERNAME] = value;
                         },
                         decoration: InputDecoration(
                           hintText:  getTranslated(context, 'login_usernameHint'),//'Enter your Username',
@@ -293,7 +196,7 @@ class _LoginState extends State<Login> {
                       padding:
                           const EdgeInsets.only(left: 5.0, right: 0.0, top: 5.0),
                       child: TextFormField(
-                        controller: this._passwordController,
+                        controller: this.passwordController,
                         validator: (value) {
                           if (value.isEmpty || value.length < 2) {
                             return 'Password is too short!';
@@ -301,7 +204,7 @@ class _LoginState extends State<Login> {
                           return null;
                         },
                         onSaved: (value) {
-                          _authData[ Auth.PASSWORD] = value;
+                          authData[ Auth.PASSWORD] = value;
                         },
                         obscureText: true,
                         decoration: InputDecoration(
@@ -348,10 +251,10 @@ class _LoginState extends State<Login> {
                           Checkbox(
                             checkColor: Colors.greenAccent,
                             activeColor: Colors.red,
-                            value: _authData[ Auth.IS_REMEMBER_ME] ,
+                            value: authData[ Auth.IS_REMEMBER_ME] ,
                             onChanged: (bool value) {
                               setState(() {
-                                _authData[ Auth.IS_REMEMBER_ME] = value;
+                                authData[ Auth.IS_REMEMBER_ME] = value;
                               });
                             },
                           ),
@@ -375,12 +278,12 @@ class _LoginState extends State<Login> {
                         ],
                       ),
                     ), //Remember Me and forget Label
-                    _authData[Auth.IS_FINGER_BIOMETRIC_SUPPORTED] ? Center(
+                    authData[Auth.IS_FINGER_BIOMETRIC_SUPPORTED] ? Center(
                       child: GestureDetector(
                         onTap: () {
                           print("Tapped on fingerprint ");
                            setState(() {
-                             _authData[ Auth.IS_USING_BIOMETRIC]=!_authData[ Auth.IS_USING_BIOMETRIC];
+                             authData[ Auth.IS_USING_BIOMETRIC]=!authData[ Auth.IS_USING_BIOMETRIC];
                            });
                         },  child: Container(
                           //height: 30.0,
@@ -388,7 +291,7 @@ class _LoginState extends State<Login> {
                             //  color: Colors.red,
                           padding: const EdgeInsets.only(top: 10.0),
                           child: Image(
-                            image:  _authData[ Auth.IS_USING_BIOMETRIC] ? AssetImage('images/fingerprint2.png') :AssetImage('images/fingerprint.png'),
+                            image:  authData[ Auth.IS_USING_BIOMETRIC] ? AssetImage('images/fingerprint2.png') :AssetImage('images/fingerprint.png'),
                             fit: BoxFit.fill,
                             width: screenWidth * .19,
                             height: screenHight * 0.12,
@@ -403,11 +306,11 @@ class _LoginState extends State<Login> {
                         padding: const EdgeInsets.only(
                             right: 20.0, left: 20.0, top: 20.0),
                         // color: Colors.green,
-                        child:  _isLoading ?
+                        child:  isLoading ?
                         CircularProgressIndicator()
                   : RaisedButton(
                           child: Text(getTranslated(context, 'login_submitButtonLabel'),),
-                          onPressed: _submit,
+                          onPressed: submit,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),

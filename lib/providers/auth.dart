@@ -50,7 +50,7 @@ class Auth with ChangeNotifier {
 
   }
 
-  Future<bool> _isFingerAuth() async {
+  Future<bool> isFingerAuth() async {
     bool auth = false;
 
     try{
@@ -158,18 +158,17 @@ class Auth with ChangeNotifier {
       Auth.IS_FINGER_BIOMETRIC_SUPPORTED: false,
     };
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-if(! _isFingerBiometricSupported) {
+  if(! _isFingerBiometricSupported) {
   _isFingerBiometricSupported = await _checkIsFingerBiometricSupported();
-}
+  }
 
     authData[Auth.IS_REMEMBER_ME]=   _prefs.getBool(Auth.IS_REMEMBER_ME) ?? false;
     authData[Auth.IS_USING_BIOMETRIC]=  _prefs.getBool(Auth.IS_USING_BIOMETRIC) ?? false;
     authData[Auth.IS_FINGER_BIOMETRIC_SUPPORTED]=  _prefs.getBool(Auth.IS_FINGER_BIOMETRIC_SUPPORTED) ??_isFingerBiometricSupported;
+
     if(authData[Auth.IS_REMEMBER_ME] || authData[Auth.IS_USING_BIOMETRIC]){
-
-      authData[Auth.USERNAME]=   _prefs.getString(Auth.USERNAME);
-      authData[Auth.PASSWORD]=   _prefs.getString(Auth.PASSWORD);
-
+      authData[Auth.USERNAME] =   _prefs.getString(Auth.USERNAME);
+      authData[Auth.PASSWORD] =   _prefs.getString(Auth.PASSWORD);
     }
 
   return authData;
