@@ -8,8 +8,8 @@ import '../services/dio_client.dart';
 class SoapClient {
   DioClient _dioClient;
   //String baseUrl = "http://192.168.100.39:8080/";
-  //String baseUrl =  "http://192.168.90.94:8080/";
-  String baseUrl =  "https://tapis.fasah.sa/api/Test";
+  String baseUrl =  "http://192.168.100.91:8089/";
+ // String baseUrl =  "https://tapis.fasah.sa/api/Test";
   SoapClient( ){
   var dio = Dio();
   final String contentType = "text/xml;charset=UTF-8";
