@@ -156,7 +156,7 @@ class _LoginState extends LoginBase {
                           return null;
                         },
                         onSaved: (value) {
-                          authData[ Auth.USERNAME] = value;
+                          this.userName = value;
                         },
                         decoration: InputDecoration(
                           hintText:  getTranslated(context, 'login_usernameHint'),//'Enter your Username',
@@ -204,7 +204,7 @@ class _LoginState extends LoginBase {
                           return null;
                         },
                         onSaved: (value) {
-                          authData[ Auth.PASSWORD] = value;
+                          password = value;
                         },
                         obscureText: true,
                         decoration: InputDecoration(
@@ -251,10 +251,10 @@ class _LoginState extends LoginBase {
                           Checkbox(
                             checkColor: Colors.greenAccent,
                             activeColor: Colors.red,
-                            value: authData[ Auth.IS_REMEMBER_ME] ,
+                            value: this.rememberMe ,
                             onChanged: (bool value) {
                               setState(() {
-                                authData[ Auth.IS_REMEMBER_ME] = value;
+                                this.rememberMe = value;
                               });
                             },
                           ),
@@ -278,27 +278,25 @@ class _LoginState extends LoginBase {
                         ],
                       ),
                     ), //Remember Me and forget Label
-                    authData[Auth.IS_FINGER_BIOMETRIC_SUPPORTED] ? Center(
+                    /*authata[Auth.IS_FINGER_BIOMETRIC_SUPPORTED] ? */Center(
                       child: GestureDetector(
                         onTap: () {
                           print("Tapped on fingerprint ");
-                           setState(() {
-                             authData[ Auth.IS_USING_BIOMETRIC]=!authData[ Auth.IS_USING_BIOMETRIC];
-                           });
+
                         },  child: Container(
                           //height: 30.0,
                           //     alignment: Alignment.center,
                             //  color: Colors.red,
                           padding: const EdgeInsets.only(top: 10.0),
                           child: Image(
-                            image:  authData[ Auth.IS_USING_BIOMETRIC] ? AssetImage('images/fingerprint2.png') :AssetImage('images/fingerprint.png'),
+                            image: AssetImage('images/fingerprint.png'),
                             fit: BoxFit.fill,
                             width: screenWidth * .19,
                             height: screenHight * 0.12,
                           ),
                         ),
                       ),
-                    ) : SizedBox(height: 2.0,), //finger print
+                    ), /*: SizedBox(height: 2.0,),*/ //finger print
                     Center(
                       child: Container(
                         width: double.infinity,
@@ -337,7 +335,6 @@ class _LoginState extends LoginBase {
                             style: TextStyle(fontSize: 15.0),
                             textAlign: TextAlign.start,
                           ),
-
                           Text( getTranslated(context, 'login_createAccountLabel'),
                               style: TextStyle(
                                 fontSize: 15.0,

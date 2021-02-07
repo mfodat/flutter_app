@@ -92,7 +92,7 @@ class Customer {
 @immutable
 class CustomerLoginRequest {
   final  String langCode;
-  final UserCredentials userCredentials;
+  final Credential userCredentials;
 
   CustomerLoginRequest({this.userCredentials, this.langCode});
   String xmlToString(){

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/core/app_session.dart';
+import 'package:flutter_app/app/core/autoLoginType.dart';
 import 'package:flutter_app/classes/language.dart';
+import 'package:flutter_app/database/user_credentails.dart';
 import 'package:flutter_app/providers/auth.dart';
 import 'package:flutter_app/util/exception_handler.dart';
 import 'package:flutter_app/widgets/bottom_navigation_bar.dart';
@@ -11,7 +14,7 @@ import 'login.dart';
 
 abstract class LoginBase extends State<Login> {
 
-  bool prefRead = false;
+
 
   void changeLanguage(Language language) async {
     Locale _locale = await setLocale(language.languageCode);
@@ -27,27 +30,13 @@ abstract class LoginBase extends State<Login> {
   }
   @override
   void didChangeDependencies() {
-    print('prefRead $prefRead');
-    if(!prefRead) {
-      Provider.of<Auth>(context, listen: false).getLoginInfoFromPref().then((
-          authData) {
-        if (!mounted) return;
-        print('prefRead $prefRead');
-        setState(() {
-          authData = authData;
-          userNameController.text = authData[Auth.USERNAME];
-          passwordController.text = authData[Auth.PASSWORD];
-          prefRead = true;
-        });
-        if(authData[Auth.IS_REMEMBER_ME] ){
-          submit();
-        }else  if(authData[Auth.IS_FINGER_BIOMETRIC_SUPPORTED ] && authData[Auth.IS_USING_BIOMETRIC ] ){
-          Provider.of<Auth>(context, listen: false).isFingerAuth().then((value) {
-            if(value) { submit(); }
-          });
+        AppSession.instance.getRemmberMe().then((rememberMe  ) {
+       // if (!mounted) return;
+        if(rememberMe ){
+          submit(isFromLogin: false);
         }
       });
-    }
+
     getLocale().then((locale) {
       setState(() {
         this.locale = locale;
@@ -56,28 +45,36 @@ abstract class LoginBase extends State<Login> {
     super.didChangeDependencies();
 
   }
-  Map<String, dynamic> authData = {
+ /* Map<String, dynamic> authData = {
     Auth.USERNAME: '',
     Auth.PASSWORD: '',
     Auth.IS_USING_BIOMETRIC: false,
     Auth.IS_REMEMBER_ME: false,
     Auth.IS_FINGER_BIOMETRIC_SUPPORTED: false,
 
-  };
+  };*/
+  String userName ='';
+  String password ='';
+  bool rememberMe = false;
   var isLoading = false;
-  Future<void> submit() async {
-    if (!formKey.currentState.validate()) {
-      // Invalid!
-      return;
+  Future<void> submit( {bool isFromLogin=true}) async {
+    if(isFromLogin) {
+      if (!formKey.currentState.validate()) {
+        // Invalid!
+        return;
+      }
+      formKey.currentState.save();
+      AppSession.instance.credential = Credential(userName: userName,password:password );
+      AppSession.instance.autoLoginType = rememberMe ? AutoLoginType.rememberMe:AutoLoginType.none;
+      AppSession.instance.isLogin = false;
+      AppSession.instance.prefRead = false;
     }
-    formKey.currentState.save();
     setState(() {
       isLoading = true;
     });
     try {
-
       // Log user in
-      await Provider.of<Auth>(context, listen: false).login( authData);
+      await Provider.of<Auth>(context, listen: false).login2(isFromLogin: isFromLogin);
       Navigator.pushNamed(context,  aboutRoute);
 
     } catch (error) {

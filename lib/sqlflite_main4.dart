@@ -66,12 +66,12 @@ class MyHomePage extends StatelessWidget {
     
     Customer loginResponseData = new Customer(fullName: 'Mohammad Aodat',customerID: '2234');
 
-    UserCredentials userCredentials = UserCredentials(userName:'odat',password: '1111111' );
+    Credential userCredentials = Credential(userName:'odat',password: '1111111' );
     userORM.insertUser(loginResponseData, userCredentials);
   }
 
   void _query() async {
-    UserCredentials userCredentials =  await userORM.getUserCredentials();
+    Credential userCredentials =  await userORM.getUserCredentials();
     print('get User Credentials row userName:' + userCredentials.userName +
         ',  password' + userCredentials.password);
 
@@ -79,7 +79,7 @@ class MyHomePage extends StatelessWidget {
 
   void _update() async {
     // row to update
-    UserCredentials userCredentials = UserCredentials(userName:'odat',password: '1111111d' );
+    Credential userCredentials = Credential(userName:'odat',password: '1111111d' );
       userORM.updatePassword(userCredentials);
 
   }

@@ -1,8 +1,10 @@
 enum AutoLoginType{
+  none,
   rememberMe,
-  bioFinger,
-  bioFace,
+  bio,
 }
+
+
 
 void main() {
 

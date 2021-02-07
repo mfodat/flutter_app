@@ -1,5 +1,5 @@
-class UserCredentials {
+class Credential {
  final String password;
   final String userName;
- UserCredentials({this.password,this.userName});
+ Credential({this.password,this.userName});
 }

@@ -49,7 +49,7 @@ class UserORM {
   //   DatabaseHelper.columnAge  : 23
   // };
   Map<String, dynamic> toUserMap(
-      Customer loginResponseData, UserCredentials userCredentials ) {
+      Customer loginResponseData, Credential userCredentials ) {
     Map<String, dynamic> contentValues = {
       COLUMN_FULLNAME: loginResponseData.fullName,
       COLUMN_CUSTOMERID: loginResponseData.customerID,
@@ -78,7 +78,7 @@ class UserORM {
   }
 
   void insertUser(
-      Customer loginResponseData,  UserCredentials userCredentials) async {
+      Customer loginResponseData,  Credential userCredentials) async {
     Map<String, dynamic> row =
         toUserMap(loginResponseData, userCredentials);
     final id = await DatabaseHelper.instance.insert(UserORM.TABLE_NAME, row);
@@ -86,12 +86,12 @@ class UserORM {
     print('inserted row id: $id');
   }
 
-  Future<UserCredentials> getUserCredentials() async {
+  Future<Credential> getUserCredentials() async {
 
     List<Map<String, dynamic>> rows =
         await DatabaseHelper.instance.queryAllRows(UserORM.TABLE_NAME);
     Map<String, dynamic> row = rows.first;
-    UserCredentials userCredentials = new UserCredentials(password:row[COLUMN_PASSWORD],userName: row[COLUMN_USERNAME] );
+    Credential userCredentials = new Credential(password:row[COLUMN_PASSWORD],userName: row[COLUMN_USERNAME] );
     print('get User Credentials row userName:' + userCredentials.userName + ',  password' + userCredentials.password);
     return userCredentials;
   }
@@ -128,7 +128,7 @@ class UserORM {
     await DatabaseHelper.instance.delete(UserORM.TABLE_NAME);
   }
 
-  void updatePassword(UserCredentials userCredentials ) async {
+  void updatePassword(Credential userCredentials ) async {
     Map<String, dynamic> contentValues = {
       COLUMN_PASSWORD: userCredentials.password,
       COLUMN_USERNAME:userCredentials.userName

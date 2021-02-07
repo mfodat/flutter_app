@@ -2,6 +2,8 @@ import 'dart:core';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/app/core/app_session.dart';
+import 'package:flutter_app/app/core/autoLoginType.dart';
 import 'package:flutter_app/database/user_credentails.dart';
 import 'package:flutter_app/database/user_orm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +20,7 @@ class Auth with ChangeNotifier {
 
   LocalAuthentication biometricsAuth = new LocalAuthentication();
 
-  Future<bool> _checkIsFingerBiometricSupported() async{
+ /* Future<bool> _checkIsFingerBiometricSupported() async{
     bool canCheckBiometrics =  await _checkBiometrics();
     if(canCheckBiometrics){
       List<BiometricType>   availableBiometrics = await _getAvailableBiometrics ();
@@ -27,9 +29,9 @@ class Auth with ChangeNotifier {
        }
     }
     return false;
-  }
+  }*/
 
-  Future<bool> _checkBiometrics() async {
+ /* Future<bool> _checkBiometrics() async {
     bool canCheckBiometrics = false;
     try{
       canCheckBiometrics =await biometricsAuth.canCheckBiometrics;
@@ -37,9 +39,9 @@ class Auth with ChangeNotifier {
       print(e);
     }
    return canCheckBiometrics;
-  }
+  }*/
 
-  Future<List<BiometricType> > _getAvailableBiometrics() async {
+  /*Future<List<BiometricType> > _getAvailableBiometrics() async {
     List<BiometricType>   availableBiometrics ;
     try{
       availableBiometrics = await biometricsAuth.getAvailableBiometrics();
@@ -48,7 +50,7 @@ class Auth with ChangeNotifier {
     }
     return availableBiometrics;
 
-  }
+  }*/
 
   Future<bool> isFingerAuth() async {
     bool auth = false;
@@ -91,26 +93,28 @@ class Auth with ChangeNotifier {
 
 
 
-  Future<void> _authenticate( Map<String, dynamic> authData,String langCode,bool isFromLogin) async {
-  String username = authData[Auth.USERNAME];
-  String password= authData[Auth.PASSWORD];
+  Future<void> _authenticate( bool isFromLogin) async {
+
+
     try{
-      UserCredentials userCredentials = UserCredentials(userName: username,password:password);
+      Credential userCredentials = AppSession.instance.credential;
+      String langCode = AppSession.instance.languageCode;
     _customerLoginRequest = CustomerLoginRequest(userCredentials:userCredentials, langCode:langCode   );
     _customerLoginResponse =  await  _customerLoginClient.customerLogin(_customerLoginRequest);
     String resultCode = _customerLoginResponse.customer.resultCode;
     if (resultCode.isEmpty ||   resultCode != Auth.SUCCESS_CODE){
       throw HttpException(_customerLoginResponse.customer.resultDescription);
     }else{
+      AppSession.instance.isLogin = true;
       _isAuth = true;
     }
       notifyListeners();
     if(isFromLogin ) {
-      setLoginInfoIntoPref(authData);
-      userORM.clearUser();
-      userORM.insertUser(_customerLoginResponse.customer, userCredentials);
-      Customer customr = await userORM.getUser();
-      print('customr '+ customr.fullName.toString());
+      AppSession.instance.store();
+    //  userORM.clearUser();
+    //  userORM.insertUser(_customerLoginResponse.customer, userCredentials);
+    //  Customer customr = await userORM.getUser();
+    //  print('customr '+ customr.fullName.toString());
     }
 
     } catch (error) {
@@ -119,20 +123,27 @@ class Auth with ChangeNotifier {
   }
 
    Future<void> signup(Map<String, dynamic> authData) async {
-    return _authenticate(authData, 'E',true);
+
   }
 
   Future<void> login( Map<String, dynamic> authData ,{bool isFromLogin=true} ) async {
-   final String languageCode='E';
-   //setLoginInfoIntoPref(_authData);
-   if(!isFromLogin){
-     authData = await getLoginInfoFromPref();
-   }
-    return _authenticate(authData , languageCode,isFromLogin);
+
+
+  }
+ // AppSession appSession = AppSession.instance;
+  Future<void> login2( {bool isFromLogin=true} ) async {
+   // final String languageCode='E';
+   // AppSession.instance.credential = Credential(password:password,userName:userName );
+   // AppSession.instance.autoLoginType = isRememberMe? AutoLoginType.rememberMe:AutoLoginType.none;
+    return _authenticate(isFromLogin);
+    //setLoginInfoIntoPref(_authData);
+   /* if(!isFromLogin){
+      authData = await getLoginInfoFromPref();
+    }*/
+  //  return _authenticate(authData , languageCode,isFromLogin);
   }
 
-
-  Future<void> setLoginInfoIntoPref(Map<String, dynamic> authData)   async {
+  /*Future<void> setLoginInfoIntoPref(Map<String, dynamic> authData)   async {
     SharedPreferences.getInstance().then((SharedPreferences _prefs)  {
 
       _prefs.setString(Auth.USERNAME, authData[Auth.USERNAME]);
@@ -144,11 +155,11 @@ class Auth with ChangeNotifier {
       _prefs.setBool(Auth.IS_FINGER_BIOMETRIC_SUPPORTED, isFingerBiometricSupported);
 
     });
-  }
+  }*/
 
   bool _isFingerBiometricSupported = false;
 
-  Future<Map<String, dynamic>> getLoginInfoFromPref() async {
+ /* Future<Map<String, dynamic>> getLoginInfoFromPref() async {
 
     Map<String, dynamic> authData = {
       Auth.USERNAME: '',
@@ -173,5 +184,5 @@ class Auth with ChangeNotifier {
 
   return authData;
 
-  }
+  }*/
 }
